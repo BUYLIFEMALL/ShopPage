@@ -13,6 +13,7 @@ import {
 } from "@/types/product";
 import { createDefaultForm } from "@/lib/form-defaults";
 import ImageUploader from "./ImageUploader";
+import ImageGenSection from "./ImageGenSection";
 import SpecsEditor from "./SpecsEditor";
 import TemplateSelector from "./TemplateSelector";
 import TemplateBadge from "./TemplateBadge";
@@ -109,12 +110,33 @@ export default function ProductForm() {
 
       <Section
         title="📸 제품 이미지"
-        subtitle="상세페이지에 들어갈 이미지를 업로드하세요 (최대 5개)"
+        subtitle="직접 업로드하거나 AI로 생성하세요 (최대 5개)"
       >
-        <ImageUploader
-          images={form.uploadedImages}
-          onChange={(images: UploadedImage[]) => update("uploadedImages", images)}
-        />
+        <div className="space-y-4">
+          <ImageUploader
+            images={form.uploadedImages}
+            onChange={(images: UploadedImage[]) => update("uploadedImages", images)}
+          />
+          {form.uploadedImages.length < 5 && (
+            <details className="group">
+              <summary className="cursor-pointer select-none text-sm font-semibold text-purple-600 hover:text-purple-800 flex items-center gap-1 list-none">
+                <span className="group-open:hidden">▶</span>
+                <span className="hidden group-open:inline">▼</span>
+                🎨 AI로 이미지 생성하기
+              </summary>
+              <div className="mt-3 p-4 bg-purple-50 rounded-xl border border-purple-100">
+                <ImageGenSection
+                  productName={form.productName}
+                  description={form.description}
+                  keySellingPoints={form.keySellingPoints}
+                  onImageGenerated={(img) =>
+                    update("uploadedImages", [...form.uploadedImages, img])
+                  }
+                />
+              </div>
+            </details>
+          )}
+        </div>
       </Section>
 
       <Section title="📝 제품 기본 정보">
