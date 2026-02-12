@@ -97,14 +97,6 @@ ${imageInstructions}
 function buildCoupangPrompt(input: CoupangInput): string {
   const base = buildBaseSection(input);
 
-  const comparisonTable =
-    input.comparisonItems.filter((c) => c.label).length > 0
-      ? input.comparisonItems
-          .filter((c) => c.label)
-          .map((c) => `  | ${c.label} | ${c.ours} | ${c.theirs} |`)
-          .join("\n")
-      : "  없음 (AI가 제품 특성에 맞게 3개 항목 자동 생성)";
-
   return `${base}
 
 ## 쿠팡 전용 정보
@@ -115,10 +107,6 @@ function buildCoupangPrompt(input: CoupangInput): string {
 - **로켓배송 뱃지**: ${input.rocketBadge ? "표시" : "미표시"}
 - **긴박감 문구**: ${input.urgencyMessage || "AI가 자동 생성 (예: 오늘 자정 특가 마감)"}
 - **인증 배지**: ${input.certificationBadges.filter(Boolean).join(", ") || "없음"}
-
-## 경쟁사 비교표 (매우 중요 — 전환율 직결)
-  | 항목 | 우리제품 | 경쟁사 |
-${comparisonTable}
 
 ## 고객 리뷰 하이라이트
 ${input.reviewHighlights.filter(Boolean).map((r) => `- "${r}"`).join("\n") || "없음 (AI가 설득력 있는 리뷰 3개 자동 생성)"}
@@ -140,7 +128,6 @@ ${input.reviewHighlights.filter(Boolean).map((r) => `- "${r}"`).join("\n") || "�
 ### [3단계] 문제→해결→왜 이 제품?
 - 고객 문제 공감 섹션 (빨간 강조)
 - 해결책으로서 제품 소개
-- 경쟁사 비교표 (우리 제품 컬럼 노란 배경 강조)
 - 핵심 기능 카드 3~5개 (아이콘 + 제목 + 설명)
 
 ### [4단계] 사회적 증거

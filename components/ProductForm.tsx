@@ -526,56 +526,6 @@ function CoupangFields({
         />
       </Section>
 
-      <Section title="⚖️ 경쟁사 비교표" subtitle="우리 제품의 우월함을 한눈에 (전환율 직결)">
-        <div className="space-y-2">
-          <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-gray-500 px-1">
-            <span>항목</span>
-            <span className="text-center">우리 제품</span>
-            <span className="text-center">경쟁사</span>
-          </div>
-          {form.comparisonItems.map((item, i) => (
-            <div key={i} className="grid grid-cols-3 gap-2">
-              <input
-                type="text"
-                value={item.label}
-                onChange={(e) => {
-                  const updated = form.comparisonItems.map((c, j) => j === i ? { ...c, label: e.target.value } : c);
-                  update("comparisonItems", updated);
-                }}
-                placeholder="항목명"
-                className="input-sm"
-              />
-              <input
-                type="text"
-                value={item.ours}
-                onChange={(e) => {
-                  const updated = form.comparisonItems.map((c, j) => j === i ? { ...c, ours: e.target.value } : c);
-                  update("comparisonItems", updated);
-                }}
-                placeholder="우리"
-                className="input-sm text-center"
-              />
-              <input
-                type="text"
-                value={item.theirs}
-                onChange={(e) => {
-                  const updated = form.comparisonItems.map((c, j) => j === i ? { ...c, theirs: e.target.value } : c);
-                  update("comparisonItems", updated);
-                }}
-                placeholder="경쟁사"
-                className="input-sm text-center"
-              />
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => update("comparisonItems", [...form.comparisonItems, { label: "", ours: "", theirs: "" }])}
-            className="text-sm text-red-500 hover:text-red-700 font-medium mt-1"
-          >
-            + 행 추가
-          </button>
-        </div>
-      </Section>
     </>
   );
 }

@@ -16,11 +16,6 @@ export interface VideoInput {
   caption?: string;
 }
 
-export interface ComparisonItem {
-  label: string;
-  ours: string;
-  theirs: string;
-}
 
 export interface TrustData {
   salesCount: string;       // 누적 판매량 (예: "3만개+")
@@ -58,8 +53,7 @@ export interface CoupangInput extends ProductInputBase {
   certificationBadges: string[];
   reviewHighlights: string[];
   rocketBadge: boolean;
-  comparisonItems: ComparisonItem[]; // 경쟁사 비교표
-  urgencyMessage: string;            // 긴박감 문구
+  urgencyMessage: string; // 긴박감 문구
 }
 
 export interface SmartstoreInput extends ProductInputBase {

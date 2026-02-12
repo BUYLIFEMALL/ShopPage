@@ -35,11 +35,6 @@ export function createDefaultForm(template: TemplateType): TemplateInput {
         certificationBadges: [],
         reviewHighlights: ["", "", ""],
         rocketBadge: true,
-        comparisonItems: [
-          { label: "", ours: "", theirs: "" },
-          { label: "", ours: "", theirs: "" },
-          { label: "", ours: "", theirs: "" },
-        ],
         urgencyMessage: "",
       };
     case "smartstore":
