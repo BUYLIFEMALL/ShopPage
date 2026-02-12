@@ -194,6 +194,116 @@ export default function ProductForm() {
         />
       </Section>
 
+      {/* ── 공통: 신뢰 & 전환 데이터 ────── */}
+      <Section
+        title="📊 신뢰 & 전환 데이터"
+        subtitle="입력할수록 AI가 더 설득력 있는 상세페이지를 생성합니다"
+      >
+        <div className="space-y-4">
+          <Field label="고객이 겪는 문제">
+            <textarea
+              value={form.problemStatement}
+              onChange={(e) => update("problemStatement", e.target.value)}
+              placeholder="예: 기존 제품을 써도 효과가 없고, 피부 자극이 심했어요"
+              rows={2}
+              className="input resize-none"
+            />
+          </Field>
+          <Field label="사용 전/후 변화 수치">
+            <input
+              type="text"
+              value={form.beforeAfterData}
+              onChange={(e) => update("beforeAfterData", e.target.value)}
+              placeholder="예: 7일 만에 톤업 체감, 4주 후 민낯 자신감 회복"
+              className="input"
+            />
+          </Field>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              수치 기반 신뢰 데이터
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">누적 판매량</label>
+                <input
+                  type="text"
+                  value={form.trustData.salesCount}
+                  onChange={(e) => update("trustData", { ...form.trustData, salesCount: e.target.value })}
+                  placeholder="예: 3만개+"
+                  className="input-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">고객 만족도</label>
+                <input
+                  type="text"
+                  value={form.trustData.satisfactionRate}
+                  onChange={(e) => update("trustData", { ...form.trustData, satisfactionRate: e.target.value })}
+                  placeholder="예: 98.7%"
+                  className="input-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">후기 수</label>
+                <input
+                  type="text"
+                  value={form.trustData.reviewCount}
+                  onChange={(e) => update("trustData", { ...form.trustData, reviewCount: e.target.value })}
+                  placeholder="예: 1,247개"
+                  className="input-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">재구매율</label>
+                <input
+                  type="text"
+                  value={form.trustData.repurchaseRate}
+                  onChange={(e) => update("trustData", { ...form.trustData, repurchaseRate: e.target.value })}
+                  placeholder="예: 67%"
+                  className="input-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* ── 공통: 구매 보장 정보 ────────── */}
+      <Section
+        title="🔒 구매 보장 정보"
+        subtitle="배송·환불·AS 정보로 구매 불안을 제거합니다"
+      >
+        <div className="space-y-3">
+          <Field label="배송 정책">
+            <input
+              type="text"
+              value={form.policyInfo.delivery}
+              onChange={(e) => update("policyInfo", { ...form.policyInfo, delivery: e.target.value })}
+              placeholder="예: 주문 후 2~3일 내 도착"
+              className="input"
+            />
+          </Field>
+          <Field label="환불/교환 정책">
+            <input
+              type="text"
+              value={form.policyInfo.refund}
+              onChange={(e) => update("policyInfo", { ...form.policyInfo, refund: e.target.value })}
+              placeholder="예: 수령 후 7일 이내 무료 반품"
+              className="input"
+            />
+          </Field>
+          <Field label="AS 안내">
+            <input
+              type="text"
+              value={form.policyInfo.as}
+              onChange={(e) => update("policyInfo", { ...form.policyInfo, as: e.target.value })}
+              placeholder="예: 1년 무상 AS 보장"
+              className="input"
+            />
+          </Field>
+        </div>
+      </Section>
+
       {/* ── 템플릿별 전용 섹션 ─────────────── */}
 
       {form.template === "coupang" && (
@@ -383,6 +493,67 @@ function CoupangFields({
           ))}
         </div>
       </Section>
+
+      <Section title="⚡ 긴박감 문구" subtitle="한정 수량·마감 시간 등 즉시 구매를 유도하는 문구">
+        <input
+          type="text"
+          value={form.urgencyMessage}
+          onChange={(e) => update("urgencyMessage", e.target.value)}
+          placeholder="예: 오늘 자정 특가 마감 / 재고 47개 남음"
+          className="input"
+        />
+      </Section>
+
+      <Section title="⚖️ 경쟁사 비교표" subtitle="우리 제품의 우월함을 한눈에 (전환율 직결)">
+        <div className="space-y-2">
+          <div className="grid grid-cols-3 gap-2 text-xs font-semibold text-gray-500 px-1">
+            <span>항목</span>
+            <span className="text-center">우리 제품</span>
+            <span className="text-center">경쟁사</span>
+          </div>
+          {form.comparisonItems.map((item, i) => (
+            <div key={i} className="grid grid-cols-3 gap-2">
+              <input
+                type="text"
+                value={item.label}
+                onChange={(e) => {
+                  const updated = form.comparisonItems.map((c, j) => j === i ? { ...c, label: e.target.value } : c);
+                  update("comparisonItems", updated);
+                }}
+                placeholder="항목명"
+                className="input-sm"
+              />
+              <input
+                type="text"
+                value={item.ours}
+                onChange={(e) => {
+                  const updated = form.comparisonItems.map((c, j) => j === i ? { ...c, ours: e.target.value } : c);
+                  update("comparisonItems", updated);
+                }}
+                placeholder="우리"
+                className="input-sm text-center"
+              />
+              <input
+                type="text"
+                value={item.theirs}
+                onChange={(e) => {
+                  const updated = form.comparisonItems.map((c, j) => j === i ? { ...c, theirs: e.target.value } : c);
+                  update("comparisonItems", updated);
+                }}
+                placeholder="경쟁사"
+                className="input-sm text-center"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => update("comparisonItems", [...form.comparisonItems, { label: "", ours: "", theirs: "" }])}
+            className="text-sm text-red-500 hover:text-red-700 font-medium mt-1"
+          >
+            + 행 추가
+          </button>
+        </div>
+      </Section>
     </>
   );
 }
@@ -536,6 +707,16 @@ function SmartstoreFields({
             </label>
           </div>
         </div>
+      </Section>
+
+      <Section title="📋 사용 방법 가이드" subtitle="단계별 사용법 (SEO 및 신뢰도 향상)">
+        <textarea
+          value={form.usageGuide}
+          onChange={(e) => update("usageGuide", e.target.value)}
+          placeholder={"1단계: 세안 후 물기를 닦아냅니다\n2단계: 적당량을 덜어 얼굴 전체에 부드럽게 펴 바릅니다\n3단계: 가볍게 두드려 흡수시킵니다"}
+          rows={4}
+          className="input resize-none"
+        />
       </Section>
 
       <Section title="❓ Q&A" subtitle="자주 묻는 질문 (최대 5개)">

@@ -7,6 +7,19 @@ const BASE_DEFAULTS = {
   targetAudience: "",
   keySellingPoints: ["", "", ""],
   uploadedImages: [],
+  problemStatement: "",
+  beforeAfterData: "",
+  trustData: {
+    salesCount: "",
+    satisfactionRate: "",
+    reviewCount: "",
+    repurchaseRate: "",
+  },
+  policyInfo: {
+    delivery: "",
+    refund: "",
+    as: "",
+  },
 };
 
 export function createDefaultForm(template: TemplateType): TemplateInput {
@@ -22,6 +35,12 @@ export function createDefaultForm(template: TemplateType): TemplateInput {
         certificationBadges: [],
         reviewHighlights: ["", "", ""],
         rocketBadge: true,
+        comparisonItems: [
+          { label: "", ours: "", theirs: "" },
+          { label: "", ours: "", theirs: "" },
+          { label: "", ours: "", theirs: "" },
+        ],
+        urgencyMessage: "",
       };
     case "smartstore":
       return {
@@ -35,6 +54,7 @@ export function createDefaultForm(template: TemplateType): TemplateInput {
         ingredientDetails: "",
         certifications: [],
         naverPayBadge: true,
+        usageGuide: "",
       };
     case "premium":
       return {

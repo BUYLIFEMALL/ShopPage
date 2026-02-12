@@ -16,6 +16,25 @@ export interface VideoInput {
   caption?: string;
 }
 
+export interface ComparisonItem {
+  label: string;
+  ours: string;
+  theirs: string;
+}
+
+export interface TrustData {
+  salesCount: string;       // 누적 판매량 (예: "3만개+")
+  satisfactionRate: string; // 만족도 % (예: "98.7%")
+  reviewCount: string;      // 후기 수 (예: "1,247개")
+  repurchaseRate: string;   // 재구매율 (예: "67%")
+}
+
+export interface PolicyInfo {
+  delivery: string; // 배송 정책
+  refund: string;   // 환불/교환 정책
+  as: string;       // AS 안내
+}
+
 export interface ProductInputBase {
   productName: string;
   description: string;
@@ -23,6 +42,11 @@ export interface ProductInputBase {
   targetAudience: string;
   keySellingPoints: string[];
   uploadedImages: UploadedImage[];
+  // 전환율 최적화 공통 필드
+  problemStatement: string;  // 고객이 겪는 문제
+  beforeAfterData: string;   // 전/후 변화 수치
+  trustData: TrustData;
+  policyInfo: PolicyInfo;
 }
 
 export interface CoupangInput extends ProductInputBase {
@@ -34,6 +58,8 @@ export interface CoupangInput extends ProductInputBase {
   certificationBadges: string[];
   reviewHighlights: string[];
   rocketBadge: boolean;
+  comparisonItems: ComparisonItem[]; // 경쟁사 비교표
+  urgencyMessage: string;            // 긴박감 문구
 }
 
 export interface SmartstoreInput extends ProductInputBase {
@@ -46,6 +72,7 @@ export interface SmartstoreInput extends ProductInputBase {
   ingredientDetails: string;
   certifications: string[];
   naverPayBadge: boolean;
+  usageGuide: string; // 사용 방법 가이드
 }
 
 export interface PremiumInput extends ProductInputBase {
