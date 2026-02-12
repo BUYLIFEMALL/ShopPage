@@ -3,13 +3,13 @@ import { v4 as uuidv4 } from "uuid";
 import { anthropic, MODEL, MAX_TOKENS } from "@/lib/claude";
 import { buildSystemPrompt, buildUserPrompt } from "@/lib/prompt-builder";
 import { savePage } from "@/lib/store";
-import { ProductInput } from "@/types/product";
+import { TemplateInput } from "@/types/product";
 
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {
-    const input: ProductInput = await request.json();
+    const input: TemplateInput = await request.json();
 
     if (!input.productName?.trim()) {
       return NextResponse.json({ error: "제품명을 입력해주세요." }, { status: 400 });
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const response = await anthropic.messages.create({
       model: MODEL,
       max_tokens: MAX_TOKENS,
-      system: buildSystemPrompt(),
+      system: buildSystemPrompt(input.template),
       messages: [
         {
           role: "user",
