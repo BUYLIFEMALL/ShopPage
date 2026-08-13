@@ -567,7 +567,7 @@ function SmartstoreFields({
             <textarea
               value={form.brandStory}
               onChange={(e) => update("brandStory", e.target.value)}
-              placeholder="2015년 설립된 저희 브랜드는..."
+              placeholder="2026년 설립된 저희 브랜드는..."
               rows={5}
               className="input resize-none"
             />
